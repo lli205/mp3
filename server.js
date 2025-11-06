@@ -14,7 +14,15 @@ var app = express();
 var port = process.env.PORT || 3000;
 
 // Connect to a MongoDB --> Uncomment this once you have a connection string!!
-//mongoose.connect(process.env.MONGODB_URI,  { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI,  { useNewUrlParser: true });
+
+// Check to see if MongoDB connection was successful
+mongoose.connection.on('connected', () => {
+    console.log('MongoDB connected');
+});
+mongoose.connection.on('error', (err) => {
+    console.error('MongoDB connection error:', err);
+});
 
 // Allow CORS so that backend and frontend could be put on different servers
 var allowCrossDomain = function (req, res, next) {
@@ -31,8 +39,13 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-// Use routes as a module (see index.js)
-require('./routes')(app, router);
+// require('./routes')(app, router);
+require('./routes')(app);
+
+//
+app.use((req, res) => res.status(404).json({ message: 'Not found', data: null }));
+app.use(require('./middleware/error'));
+
 
 // Start the server
 app.listen(port);
