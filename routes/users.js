@@ -1,6 +1,6 @@
 const User = require('../models/user');
 const Task = require('../models/task');
-const qp = require('../middleware/queryParser');
+const qp = require('../middleware/queryparser');
 const { ok } = require('../utils/response');
 
 // where, sort, select, skip, limit

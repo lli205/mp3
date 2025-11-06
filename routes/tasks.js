@@ -1,6 +1,6 @@
 const Task = require('../models/task');
 const User = require('../models/user');
-const qp = require('../middleware/queryParser');
+const qp = require('../middleware/queryparser');
 const { ok } = require('../utils/response');
 
 function applyQuery(Model, q) {
